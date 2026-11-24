@@ -198,6 +198,7 @@ jobs:
           INPUT_ROOT_SOLUTION: ${{ matrix.root_solution }}
           INPUT_BUILD_MODE: ${{ inputs.build_mode }}
           INPUT_ROM_GKI_MODULE_COMPAT: ${{ inputs.rom_gki_module_compat }}
+          PIN_KERNEL_COMMIT: 7ec40be85325cd747f735c05478bf22df2241d82
         run: bash scripts/resolve-profile.sh
 
       - name: Set build metadata

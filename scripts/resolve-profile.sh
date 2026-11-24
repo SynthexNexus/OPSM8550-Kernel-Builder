@@ -114,6 +114,14 @@ MODULES_BRANCH="${MODULES_BRANCH_OVERRIDE:-$KERNEL_BRANCH}"
 # Validate source branches before resolving optional root/patch dependencies.
 KERNEL_COMMIT="$(git_resolve_branch_commit "$KERNEL_REPO" "$KERNEL_BRANCH")"
 MODULES_COMMIT="$(git_resolve_branch_commit "$MODULES_REPO" "$MODULES_BRANCH")"
+# Local pin: build the exact kernel commit the installed ROM ships (vermagic must match vendor modules).
+if [[ -n "${PIN_KERNEL_COMMIT:-}" ]]; then
+  echo "::notice::Pinning kernel commit to $PIN_KERNEL_COMMIT (branch HEAD was $KERNEL_COMMIT)."
+  KERNEL_COMMIT="$PIN_KERNEL_COMMIT"
+fi
+if [[ -n "${PIN_MODULES_COMMIT:-}" ]]; then
+  MODULES_COMMIT="$PIN_MODULES_COMMIT"
+fi
 
 resolve_clang_version "$INPUT_CLANG_CHOICE" "$KERNEL_BRANCH"
 infer_android_versions "$KERNEL_BRANCH"
